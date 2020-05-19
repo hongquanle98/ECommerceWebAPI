@@ -26,14 +26,23 @@ namespace ECommerceWebAPI.Controllers
 
         [Route("api/orderByStatus")]
         [HttpGet]
-        public IHttpActionResult getOrderByStatus(int statusId)
+        public IHttpActionResult getOrderByStatus(int userId, int statusId)
         {
-            var order = entities.GetOrderByStatus(statusId).ToList();
+            var order = entities.GetOrderByStatus(userId, statusId).ToList();
             if (order == null)
             {
                 return NotFound();
             }
             return Ok(order);
+        }
+
+        [Route("api/cancelOrder")]
+        [AcceptVerbs("GET", "POST")]
+        [HttpPut]
+        public IHttpActionResult cancelOrder(int orderId)
+        {
+            var result = entities.CancelOrder(orderId);
+            return Ok(result);
         }
     }
 }

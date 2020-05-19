@@ -38,6 +38,15 @@ namespace ECommerceWebAPI_DataAccess
         public virtual DbSet<Status> Statuses { get; set; }
         public virtual DbSet<User> Users { get; set; }
     
+        public virtual ObjectResult<CancelOrder_Result> CancelOrder(Nullable<int> orderId)
+        {
+            var orderIdParameter = orderId.HasValue ?
+                new ObjectParameter("orderId", orderId) :
+                new ObjectParameter("orderId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<CancelOrder_Result>("CancelOrder", orderIdParameter);
+        }
+    
         public virtual ObjectResult<ChangePassword_Result> ChangePassword(Nullable<int> userId, string oldPass, string newPass)
         {
             var userIdParameter = userId.HasValue ?
@@ -116,6 +125,11 @@ namespace ECommerceWebAPI_DataAccess
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetAllOrdersOfUser_Result>("GetAllOrdersOfUser", userIdParameter);
         }
     
+        public virtual ObjectResult<GetAllOrderStatus_Result> GetAllOrderStatus()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetAllOrderStatus_Result>("GetAllOrderStatus");
+        }
+    
         public virtual ObjectResult<GetAllProducts_Result> GetAllProducts()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetAllProducts_Result>("GetAllProducts");
@@ -153,13 +167,17 @@ namespace ECommerceWebAPI_DataAccess
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("GetCartCount", userIdParameter);
         }
     
-        public virtual ObjectResult<GetOrderByStatus_Result> GetOrderByStatus(Nullable<int> statusId)
+        public virtual ObjectResult<GetOrderByStatus_Result> GetOrderByStatus(Nullable<int> userId, Nullable<int> statusId)
         {
+            var userIdParameter = userId.HasValue ?
+                new ObjectParameter("userId", userId) :
+                new ObjectParameter("userId", typeof(int));
+    
             var statusIdParameter = statusId.HasValue ?
                 new ObjectParameter("statusId", statusId) :
                 new ObjectParameter("statusId", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetOrderByStatus_Result>("GetOrderByStatus", statusIdParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetOrderByStatus_Result>("GetOrderByStatus", userIdParameter, statusIdParameter);
         }
     
         public virtual ObjectResult<GetOrderItemByOrder_Result> GetOrderItemByOrder(Nullable<int> orderId)

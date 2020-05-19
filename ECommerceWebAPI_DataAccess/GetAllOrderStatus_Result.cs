@@ -11,14 +11,9 @@ namespace ECommerceWebAPI_DataAccess
 {
     using System;
     
-    public partial class GetOrderItemByOrder_Result
+    public partial class GetAllOrderStatus_Result
     {
         public int Id { get; set; }
-        public int Quantity { get; set; }
-        public double UnitPrice { get; set; }
-        public int ProId { get; set; }
-        public int OrderId { get; set; }
-        public string Name { get; set; }
-        public string Image { get; set; }
+        public string StatusName { get; set; }
     }
 }

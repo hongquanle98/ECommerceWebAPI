@@ -292,6 +292,9 @@
       <End Role="Roles" EntitySet="Roles" />
       <End Role="Users" EntitySet="Users" />
     </AssociationSet>
+    <FunctionImport Name="CancelOrder" ReturnType="Collection(ECommerceWebAPI_Model.CancelOrder_Result)">
+      <Parameter Name="orderId" Mode="In" Type="Int32" />
+    </FunctionImport>
     <FunctionImport Name="ChangePassword" ReturnType="Collection(ECommerceWebAPI_Model.ChangePassword_Result)">
       <Parameter Name="userId" Mode="In" Type="Int32" />
       <Parameter Name="oldPass" Mode="In" Type="String" />
@@ -314,6 +317,7 @@
     <FunctionImport Name="GetAllOrdersOfUser" ReturnType="Collection(ECommerceWebAPI_Model.GetAllOrdersOfUser_Result)">
       <Parameter Name="userId" Mode="In" Type="Int32" />
     </FunctionImport>
+    <FunctionImport Name="GetAllOrderStatus" ReturnType="Collection(ECommerceWebAPI_Model.GetAllOrderStatus_Result)" />
     <FunctionImport Name="GetAllProducts" ReturnType="Collection(ECommerceWebAPI_Model.GetAllProducts_Result)" />
     <FunctionImport Name="GetAllProductsOfCart" ReturnType="Collection(ECommerceWebAPI_Model.GetAllProductsOfCart_Result)">
       <Parameter Name="userId" Mode="In" Type="Int32" />
@@ -326,6 +330,7 @@
       <Parameter Name="userId" Mode="In" Type="Int32" />
     </FunctionImport>
     <FunctionImport Name="GetOrderByStatus" ReturnType="Collection(ECommerceWebAPI_Model.GetOrderByStatus_Result)">
+      <Parameter Name="userId" Mode="In" Type="Int32" />
       <Parameter Name="statusId" Mode="In" Type="Int32" />
     </FunctionImport>
     <FunctionImport Name="GetOrderItemByOrder" ReturnType="Collection(ECommerceWebAPI_Model.GetOrderItemByOrder_Result)">
@@ -367,6 +372,10 @@
       <Parameter Name="avatar" Mode="In" Type="String" />
     </FunctionImport>
   </EntityContainer>
+  <ComplexType Name="CancelOrder_Result">
+    <Property Type="Int32" Name="result" Nullable="false" />
+    <Property Type="String" Name="message" Nullable="false" MaxLength="8" />
+  </ComplexType>
   <ComplexType Name="ChangePassword_Result">
     <Property Type="Int32" Name="result" Nullable="false" />
     <Property Type="String" Name="message" Nullable="false" MaxLength="22" />
@@ -400,6 +409,10 @@
     <Property Type="String" Name="Address" Nullable="true" MaxLength="50" />
     <Property Type="String" Name="Note" Nullable="true" MaxLength="200" />
     <Property Type="Int32" Name="StatusId" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="GetAllOrderStatus_Result">
+    <Property Type="Int32" Name="Id" Nullable="false" />
+    <Property Type="String" Name="StatusName" Nullable="false" MaxLength="50" />
   </ComplexType>
   <ComplexType Name="GetAllProducts_Result">
     <Property Type="Int32" Name="Id" Nullable="false" />
@@ -467,6 +480,8 @@
     <Property Type="Double" Name="UnitPrice" Nullable="false" />
     <Property Type="Int32" Name="ProId" Nullable="false" />
     <Property Type="Int32" Name="OrderId" Nullable="false" />
+    <Property Type="String" Name="Name" Nullable="false" MaxLength="255" />
+    <Property Type="String" Name="Image" Nullable="true" MaxLength="500" />
   </ComplexType>
   <ComplexType Name="GetProductDetailById_Result">
     <Property Type="Int32" Name="Id" Nullable="false" />
